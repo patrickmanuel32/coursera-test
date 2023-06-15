@@ -1,55 +1,41 @@
-(function() {
-    'use strict';
-
-    angular.module('ShoppingListCheckOff', [])
-        .controller('ToBuyController', ToBuyController)
-        .controller('AlreadyBoughtController', AlreadyBoughtController)
-        .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
-
-    ToBuyController.$inject = ['ShoppingListCheckOffService'];
-
-    function ToBuyController(ShoppingListCheckOffService) {
-        var toBuyList = this;
-
-        toBuyList.items = ShoppingListCheckOffService.getToBuyItems();
-
-        toBuyList.buyItem = function(itemIndex) {
-            ShoppingListCheckOffService.buyItem(itemIndex);
-        };
-    }
-
-    AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
-
-    function AlreadyBoughtController(ShoppingListCheckOffService) {
-        var alreadyBougthList = this;
-
-        alreadyBougthList.items = ShoppingListCheckOffService.getAlreadyBoughtItems();
-    }
-
-    function ShoppingListCheckOffService() {
-        var service = this;
-        var toBuyItems = [
-            { name: "cookies", quantity: 10 },
-            { name: "cokes", quantity: 2 },
-            { name: "beers", quantity: 6 },
-            { name: "apples", quantity: 4 },
-            { name: "bananas", quantity: 7 } 
-        ];
-        var alreadyBoughtItems = [];
-
-        service.buyItem = function(itemIndex) {
-            var item = toBuyItems[itemIndex];
-
-            alreadyBoughtItems.push(item);
-            toBuyItems.splice(itemIndex, 1);
-        };
-
-        service.getToBuyItems = function() {
-            return toBuyItems;
-        };
-
-        service.getAlreadyBoughtItems = function() {
-            return alreadyBoughtItems;
-        };
-    }
-})();
+(function () {
+  'use strict';
+  
+  angular.module('CounterApp', [])
+  .controller('CounterController', CounterController);
+  
+  CounterController.$inject = ['$scope'];
+  function CounterController($scope) {
+    $scope.onceCounter = 0;
+    $scope.counter = 0;
+    $scope.name = "Yaakov";
+  
+    $scope.showNumberOfWatchers = function () {
+      console.log("# of Watchers: ", $scope.$$watchersCount);
+    };
+  
+    $scope.countOnce = function () {
+      $scope.onceCounter = 1;
+    };
+  
+    $scope.upCounter = function () {
+      $scope.counter++;
+    };
+  
+    $scope.$watch(function () {
+      console.log("Digest Loop Fired!");
+    })
+  
+    // $scope.$watch('onceCounter', function (newValue, oldValue) {
+    //   console.log("onceCounter old value: ", oldValue);
+    //   console.log("onceCounter new value: ", newValue);
+    // });
+    //
+    // $scope.$watch('counter', function (newValue, oldValue) {
+    //   console.log("counter old value: ", oldValue);
+    //   console.log("counter new value: ", newValue);
+    // });
+  
+  }
+  
+  })();
